@@ -100,7 +100,7 @@ const AddClientModal = (props) => {
                 >
                   Fechar
                 </button>
-                <button type="submit" className="btn btn-success">
+                <button type="submit" className="btn btn-success" data-bs-dismiss="modal">
                   Concluir
                 </button>
               </div>
