@@ -12,7 +12,7 @@ const Workouts = () => {
 
   const GetWorkouts = () => {
     server
-      .get("https://gym-nu-lyart.vercel.app/api/listWorkouts")
+      .get("api/listWorkouts")
       .then((response) => {
         setWorkoutsList(response.data);
       })
