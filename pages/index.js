@@ -26,7 +26,7 @@ const Index = () => {
 
   const GetClients = () => {
     server
-      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listClients")
+      .get("/listClients")
       .then((response) => {
         setClientsList(response.data);
       })
