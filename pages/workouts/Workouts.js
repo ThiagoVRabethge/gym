@@ -12,11 +12,11 @@ const Workouts = () => {
 
   const GetWorkouts = () => {
     server
-      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listWorkouts")
+      .get("https://gym-nu-lyart.vercel.app/api/listWorkouts")
       .then((response) => {
         setWorkoutsList(response.data);
       })
-      .catch((error) => {error: error.message});
+      .catch((error) => console.error({error: error.message}));
   };
 
   useMemo(() => {

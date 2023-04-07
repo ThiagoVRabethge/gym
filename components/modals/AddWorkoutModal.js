@@ -7,7 +7,7 @@ const AddWorkoutModal = (props) => {
   const HandleAddWorkout = (e) => {
     e.preventDefault();
 
-    let workoutName = document.getElementById("workoutName").value;
+    let name = document.getElementById("workoutName").value;
     let exercises = document.getElementById("exercises").value;
     let series = document.getElementById("series").value;
     let repetitions = document.getElementById("repetitions").value;
@@ -15,18 +15,17 @@ const AddWorkoutModal = (props) => {
     let observations = document.getElementById("observations").value;
 
     server
-      .post()
-
-    // postWorkout(
-    //   workoutName,
-    //   exercises,
-    //   series,
-    //   repetitions,
-    //   rest,
-    //   observations
-    // ).then(() => {
-    //   props.GetWorkouts();
-    // });
+      .post("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/addWorkout", {
+        name: name,
+        exercises: exercises,
+        series: series,
+        repetitions: repetitions,
+        rest: rest,
+        observations: observations,
+      })
+      .then(() => {
+        props.GetWorkouts();
+      });
   };
 
   return (

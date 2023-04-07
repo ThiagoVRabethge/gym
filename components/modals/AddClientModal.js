@@ -21,8 +21,9 @@ const AddClientModal = (props) => {
         mobile: mobile,
         workoutId: workoutId,
       })
-      .then(() => props.GetClients())
-      .catch((error) => {error: error.message});
+      .then((response) => {
+        console.info(response);
+      });
 
     // postClient(name, email, mobile, workoutId)
     //   .then(() => {

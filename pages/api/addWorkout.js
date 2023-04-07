@@ -1,35 +1,25 @@
-import mysql from "mysql2/promise";
+import db from "./db";
 
 const addWorkout = async (req, res) => {
-  const dbconnection = await mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-  });
-
-  let workoutName = req.body.workoutName;
-  let exercises = req.body.exercises;
-  let series = req.body.series;
-  let repetitions = req.body.repetitions;
-  let rest = req.body.rest;
-  let observations = req.body.observations;
-
   try {
+    let name = req.body.name;
+    let exercises = req.body.exercises;
+    let series = req.body.series;
+    let repetitions = req.body.repetitions;
+    let rest = req.body.rest;
+    let observations = req.body.observations;
+
     const values = [];
 
-    const [data] = await dbconnection.execute(
-      `INSERT INTO workout(name, exercises, series, repetitions, rest, observations) values(?, ?, ?, ?, ?, ?)`,
-      [workoutName, exercises, series, repetitions, rest, observations],
+    const rows = await db.query(
+      `INSERT INTO workout(name, exercises, series, repetitions, rest, observations) VALUES($1, $2, $3, $4, $5, $6)`,
+      [name, exercises, series, repetitions, rest, observations],
       values
     );
 
-    res.status(200).send(data);
-
+    res.status(200).send(rows);
   } catch (error) {
-
-    res.status(500).send(error.message);
-
+    res.status(500).send({error: error.message});
   };
 };
 
