@@ -26,7 +26,7 @@ const Index = () => {
 
   const GetClients = () => {
     server
-      .get("/listClients")
+      .get("api/listClients")
       .then((response) => {
         setClientsList(response.data);
       });
