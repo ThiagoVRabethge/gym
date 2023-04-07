@@ -26,7 +26,7 @@ const Index = () => {
 
   const GetClients = () => {
     server
-      .get("https://gym-nu-lyart.vercel.app/api/listClients")
+      .get("/listClients")
       .then((response) => {
         setClientsList(response.data);
       });
