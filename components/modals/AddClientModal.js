@@ -15,20 +15,15 @@ const AddClientModal = (props) => {
     let workoutId = e.target[3].value;
 
     server
-      .post("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/addClient", {
+      .post("/api/addClient", {
         name: name,
         email: email,
         mobile: mobile,
         workoutId: workoutId,
       })
-      .then((response) => {
-        console.info(response);
+      .then(() => {
+        props.GetClients();
       });
-
-    // postClient(name, email, mobile, workoutId)
-    //   .then(() => {
-    //     props.GetClients();
-    //   });
   };
 
   return (

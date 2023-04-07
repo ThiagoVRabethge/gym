@@ -1,30 +1,21 @@
-import mysql from "mysql2/promise";
+import db from "./db";
 
 const listWorkoutHistory = async (req, res) => {
-  const dbconnection = await mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-  });
-
   let clientId = req.body.clientId;
   let selectedWorkoutId = 0;
   let workoutDate = 0;
 
   try {
-    const query = `SELECT * FROM workouts_history WHERE client_id = ${clientId}`;
-    const values = [];
+    const { rows } = await db.query(`SELECT * FROM workouts_history WHERE client_id = ${clientId}`);
 
-    const [data] = await dbconnection.execute(query, values);
-
-    data.map((data) => {
-      selectedWorkoutId = data.workout_id;
-      workoutDate = data.date;
+    rows && rows.map((rows) => {
+      selectedWorkoutId = rows.workout_id;
+      workoutDate = rows.date;
     });
+
   } catch (error) {
-    res.status(500).send(error);
-  }
+    res.status(500).send({error: error.message});
+  };
 
   try {
     const query = `SELECT * FROM workout WHERE workout_id = ${selectedWorkoutId}`;

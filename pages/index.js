@@ -34,7 +34,7 @@ const Index = () => {
 
   const GetWorkouts = () => {
     server
-      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listWorkouts")
+      .get("api/listWorkouts")
       .then((response) => {
         setWorkoutsList(response.data);
       })
@@ -49,38 +49,18 @@ const Index = () => {
   const HandleLoadTrainingToForm = (client) => {
     setSelectedClient(client);
 
-    // getClientWorkout(client.workout_id).then((response) => {
-    //   setSelectedWorkout(response.data);
-    // });
-
     server
-      .post("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listClientWorkout", {
+      .post("/api/listClientWorkout", {
         clientWorkoutId: client.workout_id,
       })
-      .then((response) => {
-        console.log(response);
-        setSelectedWorkout(response.data);
-      });
+      .then((response) => setSelectedWorkout(response.data));
 
-    // server
-    //   .post("/listWorkoutHistory", {
-    //     clientId: client.client_id,
-    //   })
-    //   .then((response) => setWorkoutHistory(response.data))
-    //   .catch((error) => console.error(error));
-
-    // getWorkoutsHistory(client.client_id, client.workout_id)
-    //   .then((response) => {
-    //     console.log(response);
-    //   });
-
-    // server
-    //   .post("/listClientWorkout", {
-    //     selectedClientWorkoutId: client.workout_id,
-    //   })
-    //   .then((response) => {
-    //     setSelectedWorkout(response.data);
-    //   });
+    server
+      .post("/api/listWorkoutHistory", {
+        clientId: client.client_id,
+      })
+      .then((response) => setWorkoutHistory(response.data));
+      // ainda precisa arrumar
   };
 
   return (
