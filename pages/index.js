@@ -110,7 +110,7 @@ const Index = () => {
                       >
                         Treino pré-pronto
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         class="btn btn-secondary btn-sm me-3"
                         data-bs-toggle="modal"
@@ -118,7 +118,7 @@ const Index = () => {
                         onClick={() => HandleLoadTrainingToForm(client)}
                       >
                         Treino personalizado
-                      </button>
+                      </button> */}
                       <button
                         type="button"
                         class="btn btn-primary btn-sm"
@@ -148,7 +148,7 @@ const Index = () => {
         workoutsList={workoutsList}
       />
 
-      <CustomWorkoutModal id="CustomWorkoutModal" client={selectedClient} />
+      {/* <CustomWorkoutModal id="CustomWorkoutModal" client={selectedClient} /> */}
 
       <WorkoutExercisesModal
         id="WorkoutExercisesModal"
