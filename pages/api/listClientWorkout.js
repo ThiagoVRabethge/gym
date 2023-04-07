@@ -1,24 +1,34 @@
-import mysql from "mysql2/promise";
+import db from "./db";
 
 const listClientWorkout = async (req, res) => {
-  const dbconnection = await mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-  });
+  const {rows} = db.query(`SELECT * FROM workout`);
 
-  const selectedClientWorkoutId = req.body.selectedClientWorkoutId;
+  res.status(200).send(rows);
+};
 
-  try {
-    const query = `SELECT * FROM workout WHERE workout_id = ${selectedClientWorkoutId}`;
-    const values = [];
-    const [data] = await dbconnection.execute(query, values);
-    dbconnection.end();
-    res.status(200).send(data);
-  } catch (error) {
-    res.status(500).send({ error });
-  }
+export default listClientWorkout;
+
+// import mysql from "mysql2/promise";
+
+// const listClientWorkout = async (req, res) => {
+//   const dbconnection = await mysql.createConnection({
+//     host: process.env.MYSQL_HOST,
+//     database: process.env.MYSQL_DATABASE,
+//     user: process.env.MYSQL_USER,
+//     password: process.env.MYSQL_PASSWORD,
+//   });
+
+//   const selectedClientWorkoutId = req.body.selectedClientWorkoutId;
+
+//   try {
+//     const query = `SELECT * FROM workout WHERE workout_id = ${selectedClientWorkoutId}`;
+//     const values = [];
+//     const [data] = await dbconnection.execute(query, values);
+//     dbconnection.end();
+//     res.status(200).send(data);
+//   } catch (error) {
+//     res.status(500).send({ error });
+//   }
 
   // try {
   //   const query = `SELECT * FROM client_workout WHERE client_id = ${clientId} && workout_id = ${workoutId}`;
@@ -43,6 +53,6 @@ const listClientWorkout = async (req, res) => {
   // } catch (error) {
   //   res.status(500).send({ error });
   // }
-};
+// };
 
-export default listClientWorkout;
+// export default listClientWorkout;

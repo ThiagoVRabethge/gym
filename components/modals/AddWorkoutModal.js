@@ -1,4 +1,5 @@
 import postWorkout from "@/requests/workouts/postWorkout";
+import server from "@/services/server";
 
 const AddWorkoutModal = (props) => {
   const id = props.id;
@@ -13,16 +14,19 @@ const AddWorkoutModal = (props) => {
     let rest = document.getElementById("rest").value;
     let observations = document.getElementById("observations").value;
 
-    postWorkout(
-      workoutName,
-      exercises,
-      series,
-      repetitions,
-      rest,
-      observations
-    ).then(() => {
-      props.GetWorkouts();
-    });
+    server
+      .post()
+
+    // postWorkout(
+    //   workoutName,
+    //   exercises,
+    //   series,
+    //   repetitions,
+    //   rest,
+    //   observations
+    // ).then(() => {
+    //   props.GetWorkouts();
+    // });
   };
 
   return (

@@ -1,5 +1,6 @@
 import Head from "next/head";
 import postClient from "../../requests/clients/postClient";
+import server from "@/services/server";
 
 const AddClientModal = (props) => {
   const id = props.id;
@@ -13,10 +14,20 @@ const AddClientModal = (props) => {
     let mobile = e.target[2].value;
     let workoutId = e.target[3].value;
 
-    postClient(name, email, mobile, workoutId)
-      .then(() => {
-        props.GetClients();
-      });
+    server
+      .post("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/addClient", {
+        name: name,
+        email: email,
+        mobile: mobile,
+        workoutId: workoutId,
+      })
+      .then(() => props.GetClients())
+      .catch((error) => {error: error.message});
+
+    // postClient(name, email, mobile, workoutId)
+    //   .then(() => {
+    //     props.GetClients();
+    //   });
   };
 
   return (

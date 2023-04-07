@@ -1,23 +1,27 @@
 import getWorkouts from "@/requests/workouts/getWorkouts";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PlusLg } from "react-bootstrap-icons";
 import AddWorkoutModal from "../../components/modals/AddWorkoutModal";
 import Nav from "@/components/nav/Nav";
+import server from "@/services/server";
 
 const Workouts = () => {
   const [workoutsList, setWorkoutsList] = useState([]);
 
-  useEffect(() => {
+  const GetWorkouts = () => {
+    server
+      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listWorkouts")
+      .then((response) => {
+        setWorkoutsList(response.data);
+      })
+      .catch((error) => {error: error.message});
+  };
+
+  useMemo(() => {
     GetWorkouts();
   }, []);
-
-  const GetWorkouts = () => {
-    getWorkouts().then((response) => {
-      setWorkoutsList(response.data);
-    });
-  };
 
   return (
     <>
@@ -28,11 +32,6 @@ const Workouts = () => {
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
           crossorigin="anonymous"
         />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          href="https://www.flaticon.com/free-icons/gym"
-        ></link>
         <title>Consultoria Fitness</title>
       </Head>
 

@@ -24,19 +24,22 @@ const Index = () => {
 
   const [workoutHistory, setWorkoutHistory] = useState([]);
 
-  // useEffect(() => {
-  //   GetClients();
-  //   GetWorkouts();
-  // }, []);
-
   const GetClients = () => {
-    getClients().then((response) => setClientsList(response.data));
+    server
+      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listClients")
+      .then((response) => {
+        setClientsList(response.data);
+      })
+      .catch((error) => {error: error.message});
   };
 
   const GetWorkouts = () => {
-    getWorkouts().then((response) => {
-      setWorkoutsList(response.data);
-    });
+    server
+      .get("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listWorkouts")
+      .then((response) => {
+        setWorkoutsList(response.data);
+      })
+      .catch((error) => {error: error.message});
   };
 
   useMemo(() => {
@@ -47,16 +50,22 @@ const Index = () => {
   const HandleLoadTrainingToForm = (client) => {
     setSelectedClient(client);
 
-    getClientWorkout(client.workout_id).then((response) => {
-      setSelectedWorkout(response.data);
-    });
+    // getClientWorkout(client.workout_id).then((response) => {
+    //   setSelectedWorkout(response.data);
+    // });
 
     server
-      .post("/listWorkoutHistory", {
-        clientId: client.client_id,
+      .post("https://thiagovrabethge-ominous-enigma-jw944566j5p3vx7-3000.preview.app.github.dev/api/listClientWorkout", {
+        selectedClientWorkoutId: client.workout_id,
       })
-      .then((response) => setWorkoutHistory(response.data))
-      .catch((error) => console.error(error));
+      .then((response) => setSelectedWorkout(response.data))
+
+    // server
+    //   .post("/listWorkoutHistory", {
+    //     clientId: client.client_id,
+    //   })
+    //   .then((response) => setWorkoutHistory(response.data))
+    //   .catch((error) => console.error(error));
 
     // getWorkoutsHistory(client.client_id, client.workout_id)
     //   .then((response) => {
@@ -72,51 +81,6 @@ const Index = () => {
     //   });
   };
 
-  const HandleAddNewClient = (e) => {
-    e.preventDefault();
-
-    let name = e.target[0].value;
-    let email = e.target[1].value;
-    let mobile = e.target[2].value;
-    let workoutId = e.target[3].value;
-
-    postClient(name, email, mobile, workoutId).then(() => {
-      GetClients();
-    });
-  };
-
-  const HandleAddWorkout = (e) => {
-    e.preventDefault();
-
-    let name = e.target[0].value;
-    let exercises = e.target[1].value;
-    let series = e.target[2].value;
-    let repetitions = e.target[3].value;
-
-    postWorkout(name, exercises, series, repetitions).then(() => {
-      GetWorkouts();
-    });
-  };
-
-  const HandleAddPreReadyWorkout = (e) => {
-    e.preventDefault();
-
-    let selectedClient = selectedClient.client_id;
-    let selectedWorkout = e.target[0].value;
-
-    postPreReadyWorkout(selectedClient, selectedWorkout);
-  };
-
-  const HandleAddCustomWorkout = (e) => {
-    let clientId = selectedClient.client_id;
-    let name = e.target[0].value;
-    let exercises = e.target[1].value;
-    let series = e.target[2].value;
-    let repetitions = e.target[3].value;
-
-    postCustomWorkout(clientId, name, exercises, series, repetitions);
-  };
-
   return (
     <>
       <Head>
@@ -126,11 +90,6 @@ const Index = () => {
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
           crossorigin="anonymous"
         />
-        <link
-          rel="icon"
-          type="image/x-icon"
-          href="https://www.flaticon.com/free-icons/gym"
-        ></link>
         <title>Consultoria Fitness</title>
       </Head>
 
