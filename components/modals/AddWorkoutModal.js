@@ -15,7 +15,7 @@ const AddWorkoutModal = (props) => {
     let observations = document.getElementById("observations").value;
 
     server
-      .post("api/addWorkout", {
+      .post("/api/addWorkout", {
         name: name,
         exercises: exercises,
         series: series,
