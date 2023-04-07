@@ -15,7 +15,7 @@ const AddWorkoutModal = (props) => {
     let observations = document.getElementById("observations").value;
 
     server
-      .post("/api/addWorkout", {
+      .post("https://gym-nu-lyart.vercel.app/api/addWorkout", {
         name: name,
         exercises: exercises,
         series: series,
