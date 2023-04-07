@@ -1,22 +1,12 @@
-import mysql from "mysql2/promise";
+import db from "./db";
 
-const workouts = async (req, res) => {
-  const dbconnection = await mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    database: process.env.MYSQL_DATABASE,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-  });
-
+const listWorkouts = async (req, res) => {
   try {
-    const query = "SELECT * FROM workout";
-    const values = [];
-    const [data] = await dbconnection.execute(query, values);
-    dbconnection.end();
-    res.status(200).send(data);
+    const { rows } = await db.query('SELECT * FROM workout');
+    res.status(200).send(rows);
   } catch (error) {
-    res.status(500).send({ error });
-  }
+    res.status(500).send({error: error.message});
+  };
 };
 
-export default workouts;
+export default listWorkouts;
