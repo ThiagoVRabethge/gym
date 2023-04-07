@@ -29,8 +29,7 @@ const Index = () => {
       .get("/listClients")
       .then((response) => {
         setClientsList(response.data);
-      })
-      .catch((error) => {error: error.message});
+      });
   };
 
   const GetWorkouts = () => {
