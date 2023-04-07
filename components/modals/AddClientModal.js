@@ -15,7 +15,7 @@ const AddClientModal = (props) => {
     let workoutId = e.target[3].value;
 
     server
-      .post("/api/addClient", {
+      .post("api/addClient", {
         name: name,
         email: email,
         mobile: mobile,
