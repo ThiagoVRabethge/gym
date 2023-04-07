@@ -12,11 +12,10 @@ const Workouts = () => {
 
   const GetWorkouts = () => {
     server
-      .get("api/listWorkouts")
+      .get("/api/listWorkouts")
       .then((response) => {
         setWorkoutsList(response.data);
-      })
-      .catch((error) => console.error({error: error.message}));
+      });
   };
 
   useMemo(() => {
