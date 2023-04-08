@@ -59,7 +59,7 @@ const Index = () => {
       .post("https://gym-nu-lyart.vercel.app/api/listWorkoutHistory", {
         clientId: client.client_id,
       })
-      .then((response) => setWorkoutHistory(response.data));
+      .then((response) => console.log(response.data));
       // ainda precisa arrumar
   };
 
