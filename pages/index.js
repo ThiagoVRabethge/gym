@@ -54,7 +54,7 @@ const Index = () => {
         clientWorkoutId: client.workout_id,
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data, "passou");
       });
 
     server
