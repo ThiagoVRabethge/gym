@@ -53,7 +53,9 @@ const Index = () => {
       .post("/api/listClientWorkout", {
         clientWorkoutId: client.workout_id,
       })
-      .then((response) => setSelectedWorkout(response.data));
+      .then((response) => {
+        console.log(response.data);
+      });
 
     server
       .post("/api/listWorkoutHistory", {
