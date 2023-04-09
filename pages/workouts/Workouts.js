@@ -34,9 +34,9 @@ const Workouts = () => {
         <title>Consultoria Fitness</title>
       </Head>
 
-      <Nav />
-
       <div className="container">
+        <Nav />
+
         <button
           type="button"
           className="btn btn-primary mt-3 mb-3 btn-sm"
