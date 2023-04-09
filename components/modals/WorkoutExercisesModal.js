@@ -9,6 +9,7 @@ const WorkoutExercisesModal = (props) => {
   const action = `https://formsubmit.co/${clientMail}`;
 
   const workoutHistory = props.workoutHistory;
+  console.log(workoutHistory);
 
   return (
     <>
@@ -21,7 +22,7 @@ const WorkoutExercisesModal = (props) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-fullscreen">
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="staticBackdropLabel">
@@ -39,7 +40,6 @@ const WorkoutExercisesModal = (props) => {
                 <table className="table table-hover">
                   <thead>
                     <tr>
-                      <th></th>
                       <th>Nome</th>
                       <th>Exercícios</th>
                       <th>Séries</th>
@@ -49,29 +49,32 @@ const WorkoutExercisesModal = (props) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th>
-                        {moment(workoutHistory.date).format("DD/MM/YYYY")}
-                      </th>
-                      <td>
-                        {workoutHistory.name}
-                      </td>
-                      <td>
-                        {workoutHistory.exercises}
-                      </td>
-                      <td>
-                        {workoutHistory.series}
-                      </td>
-                      <td>
-                        {workoutHistory.repetitions}
-                      </td>
-                      <td>
-                        {workoutHistory.rest}
-                      </td>
-                      <td>
-                        {workoutHistory.observations}
-                      </td>
-                    </tr>
+                    {workoutHistory.selectedWorkouts && workoutHistory.selectedWorkouts.map((history) => (
+                      history.workouts && history.workouts.map((newHistory) => (
+                        <>
+                          <tr>
+                            <td>
+                              {newHistory.name}
+                            </td>
+                            <td>
+                              {newHistory.exercises}
+                            </td>
+                            <td>
+                              {newHistory.series}
+                            </td>
+                            <td>
+                              {newHistory.repetitions}
+                            </td>
+                            <td>
+                              {newHistory.rest}
+                            </td>
+                            <td>
+                              {newHistory.observations}
+                            </td>
+                          </tr>
+                        </>
+                      ))
+                    ))}
                   </tbody>
                 </table>
               </div>

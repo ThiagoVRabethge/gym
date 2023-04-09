@@ -1,22 +1,36 @@
 import db from "./db";
 
 const listWorkoutHistory = async (req, res) => {
+  let workoutHistory = {
+    selectedDate: [],
+    selectedWorkouts: [],
+  };
+
+  let selectedWorkoutId = [];
+
   try {
     let clientId = req.body.clientId;
 
-    let history = {
-      dates: [],
-      workoutsIds: [],
-    };
+    const { rows } = await db.query(`SELECT * FROM workouts_history WHERE client_id = $1`, [clientId]);
 
-    const { data } = await db.query(`SELECT * FROM workouts_history WHERE client_id = ${clientId}`);
-
-    data && data.map((data) => {
-      history.dates.push({ date: data.date });
-      history.workoutsIds.push({ workoutId: data.workout_id });
+    rows && rows.map((rows) => {
+      workoutHistory.selectedDate.push({ date: rows.date });
+      selectedWorkoutId.push({ workoutId: rows.workout_id });
     });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  };
 
-    res.status(200).send(history);
+  try {
+    const stringIds = selectedWorkoutId.map((id) => `${id.workoutId}`);
+
+    const query = `SELECT * FROM workout WHERE workout_id IN (${stringIds.join(',')})`;
+
+    const { rows } = await db.query(query);
+
+    workoutHistory.selectedWorkouts.push({workouts: rows});
+
+    res.status(200).send(workoutHistory);
   } catch (error) {
     res.status(500).send({ error: error.message });
   };

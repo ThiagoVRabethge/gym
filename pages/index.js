@@ -56,10 +56,12 @@ const Index = () => {
       .then((response) => setSelectedWorkout(response.data));
 
     server
-      .post("https://gym-nu-lyart.vercel.app/api/listWorkoutHistory", {
+      .post("/api/listWorkoutHistory", {
         clientId: client.client_id,
       })
-      .then((response) => console.log(response.data));
+      .then((response) => {
+        setWorkoutHistory(response.data);
+      });
       // ainda precisa arrumar
   };
 
