@@ -7,8 +7,6 @@ const Modal = (props) => {
   const workoutsList = props.workoutsList;
 
   const HandleAddPreReadyWorkout = (e) => {
-    e.preventDefault();
-
     let selectedClient = client.client_id;
     let selectedWorkout = e.target[0].value;
 
