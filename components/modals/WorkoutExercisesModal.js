@@ -1,5 +1,3 @@
-import moment from "moment/moment";
-
 const WorkoutExercisesModal = (props) => {
   const id = props.id;
   const client = props.client;
@@ -7,9 +5,7 @@ const WorkoutExercisesModal = (props) => {
   const selectedWorkout = props.selectedWorkout;
   const clientMail = client.email;
   const action = `https://formsubmit.co/${clientMail}`;
-
   const workoutHistory = props.workoutHistory;
-  console.log(workoutHistory);
 
   return (
     <>
@@ -115,7 +111,7 @@ const WorkoutExercisesModal = (props) => {
                       <input
                         type="hidden"
                         value={workout.observations}
-                        name="Repetições"
+                        name="Observações"
                       />
                       <input
                         type="hidden"
@@ -125,7 +121,7 @@ const WorkoutExercisesModal = (props) => {
                       <input
                         type="hidden"
                         name="_next"
-                        value="http://localhost:3000"
+                        value="https://gym-nu-lyart.vercel.app/"
                       />
                     </>
                   ))}
