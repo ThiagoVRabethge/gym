@@ -1,4 +1,5 @@
 import postPreReadyWorkout from "@/requests/workouts/postPreReadyWorkout";
+import server from "@/services/server";
 
 const Modal = (props) => {
   const id = props.id;
@@ -6,10 +7,17 @@ const Modal = (props) => {
   const workoutsList = props.workoutsList;
 
   const HandleAddPreReadyWorkout = (e) => {
+    e.preventDefault();
+
     let selectedClient = client.client_id;
     let selectedWorkout = e.target[0].value;
 
-    postPreReadyWorkout(selectedClient, selectedWorkout);
+    server
+      .post("/api/addPreReadyWorkout", {
+        clientId: selectedClient,
+        workoutId: selectedWorkout,
+      })
+      .then((response) => console.info(response));
   };
 
   return (

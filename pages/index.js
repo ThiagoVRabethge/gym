@@ -62,7 +62,6 @@ const Index = () => {
       .then((response) => {
         setWorkoutHistory(response.data);
       });
-      // ainda precisa arrumar
   };
 
   return (
