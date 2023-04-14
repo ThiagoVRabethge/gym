@@ -14,9 +14,13 @@ import Nav from "@/components/nav/Nav";
 import getWorkoutsHistory from "@/requests/workouts/getWorkoutsHistory";
 import server from "@/services/server";
 import WorkoutsHistoryModal from "@/components/modals/WorkoutsHistoryModal";
+import useClientStore from "./stores/clientStore";
 
 const Index = () => {
-  const [clientsList, setClientsList] = useState([]);
+  const { clientsList, setClientsList } = useClientStore();
+  console.log(clientsList);
+
+  // const [clientsList, setClientsList] = useState([]);
   const [selectedClient, setSelectedClient] = useState({});
 
   const [workoutsList, setWorkoutsList] = useState([]);
@@ -38,7 +42,7 @@ const Index = () => {
       .then((response) => {
         setWorkoutsList(response.data);
       })
-      .catch((error) => {error: error.message});
+      .catch((error) => { error: error.message });
   };
 
   useMemo(() => {
