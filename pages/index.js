@@ -14,9 +14,17 @@ import Nav from "@/components/nav/Nav";
 import getWorkoutsHistory from "@/requests/workouts/getWorkoutsHistory";
 import server from "@/services/server";
 import WorkoutsHistoryModal from "@/components/modals/WorkoutsHistoryModal";
+import { create } from "zustand";
+
+const useClientsStore = create((set) => ({
+  clientsList: [],
+  setClientsList: (newClientsList) => set((state) => ({ clientsList: newClientsList })),
+}))
 
 const Index = () => {
-  const [clientsList, setClientsList] = useState([]);
+  const { clientsList, setClientsList } = useClientsStore();
+
+  // const [clientsList, setClientsList] = useState([]);
   const [selectedClient, setSelectedClient] = useState({});
 
   const [workoutsList, setWorkoutsList] = useState([]);
