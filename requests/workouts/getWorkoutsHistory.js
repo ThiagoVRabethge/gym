@@ -1,11 +1,10 @@
 import server from "@/services/server";
 
-const getWorkoutsHistory = () => {
+const getWorkoutsHistory = (clientId) => {
   return (
     server
-      .get("/listWorkoutHistory", {
-        clientId: "",
-        workoutId: "",
+      .post("/api/listWorkoutHistory", {
+        clientId: clientId,
       })
       .then((response) => response)
       .catch((error) => console.error(error))

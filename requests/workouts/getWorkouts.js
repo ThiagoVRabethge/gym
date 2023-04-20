@@ -3,7 +3,7 @@ import server from "@/services/server";
 const getWorkouts = () => {
   return (
     server
-      .get("/listWorkouts")
+      .get("/api/listWorkouts")
       .then((response) => response)
       .catch((error) => console.error(error))
   );

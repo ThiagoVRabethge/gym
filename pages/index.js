@@ -1,11 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import getClients from "@/requests/clients/getClients";
 import Head from "next/head";
 import PreReadyWorkoutModal from "../components/modals/PreReadyWorkoutModal";
 import AddClientModal from "@/components/modals/AddClientModal";
 import getWorkouts from "@/requests/workouts/getWorkouts";
 import WorkoutExercisesModal from "../components/modals/WorkoutExercisesModal";
-import CustomWorkoutModal from "../components/modals/CustomWorkoutModal";
 import { PlusLg } from "react-bootstrap-icons";
 import Link from "next/link";
 import getClientWorkout from "@/requests/workouts/getClientWorkout";
@@ -15,16 +14,18 @@ import getWorkoutsHistory from "@/requests/workouts/getWorkoutsHistory";
 import server from "@/services/server";
 import WorkoutsHistoryModal from "@/components/modals/WorkoutsHistoryModal";
 import useClientsStore from "@/stores/clientsStore";
+import useWorkoutsStore from "@/stores/workoutsStore";
 
 const Index = () => {
-  const { clientsList, setClientsList } = useClientsStore();
+  const { clientsList, setClientsList, selectedClient, setSelectedClient } = useClientsStore();
 
-  const [selectedClient, setSelectedClient] = useState({});
-
-  const [workoutsList, setWorkoutsList] = useState([]);
-  const [selectedWorkout, setSelectedWorkout] = useState([]);
-
-  const [workoutHistory, setWorkoutHistory] = useState([]);
+  const {
+    workoutsList, 
+    setWorkoutsList, 
+    selectedWorkout, 
+    setSelectedWorkout, 
+    workoutHistory, 
+    setWorkoutHistory} = useWorkoutsStore();
 
   const GetClients = () => {
     getClients()
@@ -32,12 +33,8 @@ const Index = () => {
   };
 
   const GetWorkouts = () => {
-    server
-      .get("api/listWorkouts")
-      .then((response) => {
-        setWorkoutsList(response.data);
-      })
-      .catch((error) => { error: error.message });
+    getWorkouts()
+      .then((response) => setWorkoutsList(response.data));
   };
 
   useMemo(() => {
@@ -48,19 +45,11 @@ const Index = () => {
   const HandleLoadTrainingToForm = (client) => {
     setSelectedClient(client);
 
-    server
-      .post("/api/listClientWorkout", {
-        clientWorkoutId: client.workout_id,
-      })
+    getClientWorkout(client.workout_id)
       .then((response) => setSelectedWorkout(response.data));
 
-    server
-      .post("/api/listWorkoutHistory", {
-        clientId: client.client_id,
-      })
-      .then((response) => {
-        setWorkoutHistory(response.data);
-      });
+    getWorkoutsHistory(client.client_id)
+      .then((response) => setWorkoutHistory(response.data));
   };
 
   return (
@@ -110,15 +99,7 @@ const Index = () => {
                       >
                         Treino pré-pronto
                       </button>
-                      {/* <button
-                        type="button"
-                        class="btn btn-secondary btn-sm me-3"
-                        data-bs-toggle="modal"
-                        data-bs-target="#CustomWorkoutModal"
-                        onClick={() => HandleLoadTrainingToForm(client)}
-                      >
-                        Treino personalizado
-                      </button> */}
+
                       <button
                         type="button"
                         class="btn btn-primary btn-sm"
@@ -147,8 +128,6 @@ const Index = () => {
         client={selectedClient}
         workoutsList={workoutsList}
       />
-
-      {/* <CustomWorkoutModal id="CustomWorkoutModal" client={selectedClient} /> */}
 
       <WorkoutExercisesModal
         id="WorkoutExercisesModal"
