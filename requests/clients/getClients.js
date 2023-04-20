@@ -3,9 +3,9 @@ import server from "@/services/server";
 const getClients = () => {
   return (
     server
-        .get("/clients")
-        .then((response) => response)
-        .catch((error) => console.error(error))
+      .get("/api/listClients")
+      .then((response) => response)
+      .catch((error) => console.error(error))
     );
 };
 
