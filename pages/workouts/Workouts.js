@@ -6,21 +6,24 @@ import { PlusLg } from "react-bootstrap-icons";
 import AddWorkoutModal from "../../components/modals/AddWorkoutModal";
 import Nav from "@/components/nav/Nav";
 import server from "@/services/server";
+import useWorkoutsStore from "@/stores/workoutsStore";
 
 const Workouts = () => {
-  const [workoutsList, setWorkoutsList] = useState([]);
+  // const [workoutsList, setWorkoutsList] = useState([]);
 
-  const GetWorkouts = () => {
-    server
-      .get("https://gym-nu-lyart.vercel.app/api/listWorkouts")
-      .then((response) => {
-        setWorkoutsList(response.data);
-      });
-  };
+  // const GetWorkouts = () => {
+  //   server
+  //     .get("https://gym-nu-lyart.vercel.app/api/listWorkouts")
+  //     .then((response) => {
+  //       setWorkoutsList(response.data);
+  //     });
+  // };
 
-  useMemo(() => {
-    GetWorkouts();
-  }, []);
+  // useMemo(() => {
+  //   GetWorkouts();
+  // }, []);
+
+  const workoutsList = useWorkoutsStore((state) => state.workoutsList);
 
   return (
     <>
